@@ -29,11 +29,9 @@ SOFTWARE.
 Checks for equality between two null-terminated strings 'a' and 'b'.
 Returns 1 if equal, else 0.
 */
-bool streql(const char* const a, const char* const b) {
-    const char* _a = a;
-    const char* _b = b;
-    while (*_a == *_b++ && *_a++);
-    return !*--_a;
+bool streql(const char* a, const char* b) {
+    while (*a == *b++ && *a) ++a;
+    return !*a;
 }
 
 #endif
