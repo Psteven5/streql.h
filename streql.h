@@ -12,7 +12,7 @@ static inline bool streql(const char* a, const char* b) {
         ++a;
         ++b;
     }
-    return !*a && !*b;
+    return *a == *b;
 }
 
 #endif
