@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 /*
+-- Only worth using for longer strings. --
 Checks for equality between two null-terminated strings 'a' and 'b'.
 Returns 1 if equal, else 0.
 */
