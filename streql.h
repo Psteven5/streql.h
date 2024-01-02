@@ -41,7 +41,7 @@ static inline bool streql_x64(const char* a, const char* b) {
         "setzb %0;"
         : "=r" (ret)
         : "r" (a), "r" (b)
-        : "rax", "%rbx", "%rcx", "%rdx"
+        : "rax", "%rbx"
     );
     return ret;
 }
