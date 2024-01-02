@@ -18,18 +18,28 @@ static inline bool streql(const char* a, const char* b) {
     }
     const uint32_t* ad = (const uint32_t*)--aq;
     const uint32_t* bd = (const uint32_t*)--bq;
+    if (ad < (const uint32_t*)a) {
+        ad = (const uint32_t*)a;
+        bd = (const uint32_t*)b;
+    }
     while (*ad && *ad == *bd) {
         ++ad;
         ++bd;
     }
     const uint16_t* aw = (const uint16_t*)--ad;
     const uint16_t* bw = (const uint16_t*)--bd;
+    if (aw < (const uint16_t*)a) {
+        aw = (const uint16_t*)a;
+        bw = (const uint16_t*)b;
+    }
     while (*aw && *aw == *bw) {
         ++aw;
         ++bw;
     }
-    a = (const char*)--aw;
-    b = (const char*)--bw;
+    if (a < (const char*)aw) {
+        a = (const char*)--aw;
+        b = (const char*)--bw;
+    }
     while (*a && *a == *b) {
         ++a;
         ++b;
