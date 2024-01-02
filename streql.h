@@ -8,15 +8,13 @@ Checks for equality between two null-terminated strings 'a' and 'b'.
 Returns 1 if equal, else 0.
 */
 static inline bool streql(const char* a, const char* b) {
-    bool result;
+    bool ret;
     asm(
         ".LOOP:"
-        "movb (%1), %%al;"
-        "movb (%2), %%bl;"
-        "movb +1(%1), %%ah;"
-        "movb +1(%2), %%bh;"
-        "incq %1;"
-        "incq %2;"
+        "mov (%1), %%ax;"
+        "mov (%2), %%bx;"
+        "addq $2, %1;"
+        "addq $2, %2;"
         "testb %%al, %%al;"
         "andb %%ah, %%ah;"
         "jz .END;"
@@ -29,7 +27,7 @@ static inline bool streql(const char* a, const char* b) {
         : "r" (a), "r" (b)
         : "%ax", "%bx"
     );
-    return result;
+    return ret;
 }
 
 #endif
