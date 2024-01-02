@@ -10,26 +10,26 @@ Meant for long strings.
 Returns 1 if equal, else 0.
 */
 static inline bool streql(const char* a, const char* b) {
-    const unsigned long long* _a = (const unsigned long long*)a;
-    const unsigned long long* _b = (const unsigned long long*)b;
-    while (*_a && *_a == *_b) {
-        ++_a;
-        ++_b;
+    const unsigned long long* aq = (const unsigned long long*)a;
+    const unsigned long long* bq = (const unsigned long long*)b;
+    while (*aq && *aq == *bq) {
+        ++aq;
+        ++bq;
     }
-    const unsigned long* __a = (const unsigned long*)_a;
-    const unsigned long* __b = (const unsigned long*)_b;
-    while (*__a && *__a == *__b) {
-        ++__a;
-        ++__b;
+    const unsigned long* ad = (const unsigned long*)aq;
+    const unsigned long* bd = (const unsigned long*)bq;
+    while (*ad && *ad == *bd) {
+        ++ad;
+        ++bd;
     }
-    const unsigned short* _a_ = (const unsigned short*)__a;
-    const unsigned short* _b_ = (const unsigned short*)__b;
-    while (*_a_ && *_a_ == *_b_) {
-        ++_a_;
-        ++_b_;
+    const unsigned short* aw = (const unsigned short*)ad;
+    const unsigned short* bw = (const unsigned short*)bd;
+    while (*aw && *aw == *bw) {
+        ++aw;
+        ++bw;
     }
-    a = (const char*)_a_;
-    b = (const char*)_b_;
+    a = (const char*)aw;
+    b = (const char*)bw;
     while (*a && *a == *b) {
         ++a;
         ++b;
