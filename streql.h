@@ -10,11 +10,13 @@ Returns 1 if equal, else 0.
 static inline bool streql(const char* a, const char* b) {
     bool ret;
     asm(
+        "leaq (%1), %%rcx;"
+        "leaq (%2), %%rdx;"
         ".LOOP:"
-        "mov (%1), %%ax;"
-        "mov (%2), %%bx;"
-        "addq $2, %1;"
-        "addq $2, %2;"
+        "mov (%%rcx), %%ax;"
+        "mov (%%rdx), %%bx;"
+        "addq $2, %%rcx;"
+        "addq $2, %%rdx;"
         "testb %%al, %%al;"
         "andb %%ah, %%ah;"
         "jz .END;"
@@ -25,7 +27,7 @@ static inline bool streql(const char* a, const char* b) {
         "setz %0;"
         : "=r" (ret)
         : "r" (a), "r" (b)
-        : "%ax", "%bx"
+        : "rax", "%rbx", "%rcx", "%rdx"
     );
     return ret;
 }
