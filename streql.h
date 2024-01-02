@@ -8,12 +8,14 @@ Checks for equality between two null-terminated strings 'a' and 'b'.
 Returns 1 if equal, else 0.
 */
 static inline bool streql(const char* a, const char* b) {
-    unsigned short as, bs;
+    const unsigned int* _a = (const unsigned int*)a;
+    const unsigned int* _b = (const unsigned int*)b;
+    unsigned int al, bl;
     do {
-        as = *(a += 2);
-        bs = *(b += 2);
-    } while (as == bs && as - (as >> 8));
-    return as == bs;
+        al = *_a++;
+        bl = *_b++;
+    } while (al == bl && al & al >> 24 & al >> 16 & al >> 8);
+    return al == bl;
 }
 
 /*
