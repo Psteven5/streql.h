@@ -9,9 +9,9 @@ Checks for equality between two null-terminated strings 'a' and 'b'.
 Returns 1 if equal, else 0.
 */
 static inline bool streql(const char* a, const char* b) {
-    const uint32_t* _a = (const uint32_t*)a;
-    const uint32_t* _b = (const uint32_t*)b;
-    uint32_t al, bl;
+    const uint_fast32_t* _a = (const uint_fast32_t*)a;
+    const uint_fast32_t* _b = (const uint_fast32_t*)b;
+    uint_fast32_t al, bl;
     do {
         al = *_a++;
         bl = *_b++;
