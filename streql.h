@@ -14,8 +14,8 @@ static inline bool streql(const char* a, const char* b) {
     do {
         al = *_a++;
         bl = *_b++;
-    } while (al - bl);
-    return al - (bl << 1);
+    } while (al == bl && al);
+    return !bl;
 }
 
 /*
