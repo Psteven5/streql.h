@@ -6,44 +6,35 @@
 
 /*
 Checks for equality between two null-terminated strings 'a' and 'b'.
+Meant for long strings.
 Returns 1 if equal, else 0.
 */
 static inline bool streql(const char* a, const char* b) {
-    const uint_fast32_t* _a = (const uint_fast32_t*)a;
-    const uint_fast32_t* _b = (const uint_fast32_t*)b;
-    uint_fast32_t al, bl;
-    do {
-        al = *_a++;
-        bl = *_b++;
-    } while (al && al == bl);
-    return !bl;
-}
-
-/*
--- x64 inline assembly variant of streql() --
-Checks for equality between two null-terminated strings 'a' and 'b'.
-Returns 1 if equal, else 0.
-*/
-static inline bool streql_x64(const char* a, const char* b) {
-    bool ret;
-    asm(
-        ".STREQL_LOOP:"
-        "movl (%1), %%eax;"
-        "movl (%2), %%ebx;"
-        "addq $4, %1;"
-        "addq $4, %2;"
-        "testl %%eax, %%eax;"
-        "jz .STREQL_END;"
-        "cmpl %%eax, %%ebx;"
-        "je .STREQL_LOOP;"
-        ".STREQL_END:"
-        "testl %%ebx, %%ebx;"
-        "setzb %0;"
-        : "=r" (ret)
-        : "r" (a), "r" (b)
-        : "rax", "%rbx"
-    );
-    return ret;
+    const unsigned long long* _a = (const unsigned long long*)a;
+    const unsigned long long* _b = (const unsigned long long*)b;
+    while (*_a && *_a == *_b) {
+        ++_a;
+        ++_b;
+    }
+    const unsigned long* __a = (const unsigned long*)_a;
+    const unsigned long* __b = (const unsigned long*)_b;
+    while (*__a && *__a == *__b) {
+        ++__a;
+        ++__b;
+    }
+    const unsigned short* _a_ = (const unsigned short*)__a;
+    const unsigned short* _b_ = (const unsigned short*)__b;
+    while (*_a_ && *_a_ == *_b_) {
+        ++_a_;
+        ++_b_;
+    }
+    a = (const char*)_a_;
+    b = (const char*)_b_;
+    while (*a && *a == *b) {
+        ++a;
+        ++b;
+    }
+    return !*b;
 }
 
 #endif
