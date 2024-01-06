@@ -10,10 +10,9 @@ Checks for equality between two null-terminated strings 'a' and 'b'.
 Returns 1 if equal, else 0.
 */
 static inline bool streql(const char* a, const char* b) {
-    size_t* pa = (size_t*)a;
-    size_t* pb = (size_t*)b;
-    while (1) {
-        if (!(*pa && !(*pa ^ *pb))) break;
+    const size_t* pa = (const size_t*)a;
+    const size_t* pb = (const size_t*)b;
+    while (*pa && *pa == *pb) {
         ++pa; ++pb;
     }
     return !strncmp((const char*)pa, (const char*)pb, sizeof(size_t));
