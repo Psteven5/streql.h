@@ -11,15 +11,15 @@ Returns 1 if equal, else 0.
 */
 static inline bool streql(const char* a, const char* b) {
     size_t ai, bi;
-    do {
-        memcpy(&ai, a, sizeof(size_t));
+    size_t i = 0;
+    for (;;) {
+        memcpy(&ai, a + i, sizeof(size_t));
         if (!ai) break;
-        memcpy(&bi, b, sizeof(size_t));
+        memcpy(&bi, b + i, sizeof(size_t));
         if (ai ^ bi) break;
-        a += sizeof(size_t);
-        b += sizeof(size_t);
-    } while (1);
-    return !strncmp(a, b, sizeof(size_t));
+        i += sizeof(size_t);
+    }
+    return !strncmp(a + i, b + i, sizeof(size_t));
 }
 
 #endif
