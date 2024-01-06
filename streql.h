@@ -12,10 +12,14 @@ Returns 1 if equal, else 0.
 static inline bool streql(const char* a, const char* b) {
     const size_t* pa = (const size_t*)a;
     const size_t* pb = (const size_t*)b;
-    while (*pa && *pa == *pb) {
-        ++pa; ++pb;
-    }
-    return !strncmp((const char*)pa, (const char*)pb, sizeof(size_t));
+    size_t ai, bi;
+    do {
+        ai = *pa++;
+        bi = *pb++;
+        if (!ai) break;
+        if (ai ^ bi) break;
+    } while (1);
+    return !strncmp((const char*)&ai, (const char*)&bi, sizeof(size_t));
 }
 
 #endif
