@@ -14,12 +14,14 @@ static inline bool streql(const char* a, const char* b) {
     const size_t* pb = (const size_t*)b;
     size_t ai, bi;
     do {
-        ai = *pa++;
-        bi = *pb++;
+        memcpy(&ai, pa, sizeof(size_t));
         if (!ai) break;
+        memcpy(&bi, pb, sizeof(size_t));
         if (ai ^ bi) break;
+        ++pa;
+        ++pb;
     } while (1);
-    return !strncmp((const char*)&ai, (const char*)&bi, sizeof(size_t));
+    return !strncmp((const char*)pa, (const char*)pb, sizeof(size_t));
 }
 
 #endif
